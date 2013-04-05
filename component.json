@@ -1,0 +1,7 @@
+{
+	"name":"Chev",
+	"version":"0.1.0",
+	"description":"chained events",
+	"repo":"kaerus-components/chev",
+	"scripts":["index.js"]
+}
