@@ -161,6 +161,28 @@ Chev.prototype.remove = function(event,handler){
     return this;        
 }
 
+Chev.prototype.call = function(event){
+    var call = {next:this._chev[event]},
+        args = Array.prototype.slice.call(arguments,1);
+
+    args.unshift(next);
+
+    function next(){
+        call = call.next;
+
+        if(arguments.length > 0){
+            args = Array.prototype.slice.call(arguments);
+            args.unshift(next);
+        }
+
+        if(call && call.on) call.on.apply(this,args);
+
+        return call ? next : undefined;
+    }
+
+    return next.apply(this,args);
+}
+
 Chev.prototype.emit = function(event){
     var ev = this._chev[event],
         args = Array.prototype.slice.call(arguments,1);
@@ -172,6 +194,5 @@ Chev.prototype.emit = function(event){
 
     return this;
 }
-
 
 module.exports = Chev;
